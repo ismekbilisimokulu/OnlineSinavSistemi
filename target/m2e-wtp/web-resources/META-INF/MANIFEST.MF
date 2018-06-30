@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: OnlineSinavSistemi
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: ayhan
+Implementation-Vendor-Id: com.ismek
+Build-Jdk: 1.8.0_144
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/OnlineSinavSistemi
+Created-By: Maven Integration for Eclipse
+
