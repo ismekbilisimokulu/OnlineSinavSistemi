@@ -3,6 +3,8 @@ package com.ismek.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,14 +22,22 @@ public class RestAPIV1 {
 	private KullaniciRespository kullaniciRepository;
 	
 	@RequestMapping(path="/kullanici", method=RequestMethod.GET)
-    public List<Kullanici> findAllKullanici() {
+    public ResponseEntity<List<Kullanici>> findAllKullanici() {
 		Iterable<Kullanici> kullaniciIt = kullaniciRepository.findAll();
-		return Utils.toList(kullaniciIt);
+		List<Kullanici> list = Utils.toList(kullaniciIt);
+		if (list == null) {
+	          return new ResponseEntity<List<Kullanici>>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<List<Kullanici>>(list,HttpStatus.OK);
     }
 	
 	@RequestMapping(path="/login/{tcNo}/{telefon}", method=RequestMethod.GET)
-    public Kullanici login(@PathVariable("tcNo") String tcNo, @PathVariable("telefon") String telefon) {
-		return kullaniciRepository.findByTcNoAndTelefon(tcNo,telefon);
+    public ResponseEntity<Kullanici> login(@PathVariable("tcNo") String tcNo, @PathVariable("telefon") String telefon) {
+		Kullanici kullanici = kullaniciRepository.findByTcNoAndTelefon(tcNo,telefon);
+		if (kullanici == null) {
+			return new ResponseEntity<Kullanici>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<Kullanici>(kullanici,HttpStatus.OK);
     }
 
 }
