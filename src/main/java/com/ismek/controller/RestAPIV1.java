@@ -25,18 +25,12 @@ public class RestAPIV1 {
     public ResponseEntity<List<Kullanici>> findAllKullanici() {
 		Iterable<Kullanici> kullaniciIt = kullaniciRepository.findAll();
 		List<Kullanici> list = Utils.toList(kullaniciIt);
-		if (list == null) {
-	          return new ResponseEntity<List<Kullanici>>(HttpStatus.NOT_FOUND);
-		}
 		return new ResponseEntity<List<Kullanici>>(list,HttpStatus.OK);
     }
 	
 	@RequestMapping(path="/login/{tcNo}/{telefon}", method=RequestMethod.GET)
     public ResponseEntity<Kullanici> login(@PathVariable("tcNo") String tcNo, @PathVariable("telefon") String telefon) {
 		Kullanici kullanici = kullaniciRepository.findByTcNoAndTelefon(tcNo,telefon);
-		if (kullanici == null) {
-			return new ResponseEntity<Kullanici>(HttpStatus.NOT_FOUND);
-		}
 		return new ResponseEntity<Kullanici>(kullanici,HttpStatus.OK);
     }
 
